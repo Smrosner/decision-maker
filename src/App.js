@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
-function App() {
+const decisions = ['No Way', 'Yes', 'Try Again', 'Nope', 'Definitely', 'Maybe']
+
+const App = () => {
+  const [decision, setDecision] = useState("I'm thinking...")
+  const decider = () => {
+    const random = decisions[Math.floor(Math.random()*decisions.length)]
+    if (random !== decision) {
+      setDecision(random)
+    } else {
+      decider()
+    }
+    return random
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App-header">
+      <h1>Decision Maker</h1>
+      <p> The answer is:</p>
+      <p>{decision}</p>
+      <button className="button" onClick={() => decider()}>Decide</button>
     </div>
   );
 }
